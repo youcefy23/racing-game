@@ -1,0 +1,27 @@
+name: Build and Upload
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - run: npm install
+      - run: npm run build
+
+      - run: ls -R
+        name: Show directory structure
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: racing-build
+          path: dist
